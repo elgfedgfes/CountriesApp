@@ -152,6 +152,10 @@ class infoCountriesView: UIViewController {
     }
     
     @objc func goToShowFlag(_ sender: UIButton) {
+        let showFlagVC = FlagView()
+        showFlagVC.flagURLToShow = registerDataToShow?.flagURL
+        showFlagVC.modalPresentationStyle = .fullScreen
+        self.navigationController?.present(showFlagVC, animated: true)
     }
     
     @objc func goToShowMap(_ sender: UIButton) {
