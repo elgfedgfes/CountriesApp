@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window.rootViewController = navigation
         window.makeKeyAndVisible()
         self.window = window
-        let vc = ViewController()
+        let vc = HomeView()
         navigation?.pushViewController(vc, animated: true)
         return true
     }
