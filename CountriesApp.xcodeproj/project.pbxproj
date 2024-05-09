@@ -31,6 +31,7 @@
 		562F155D2BEC8A3C00DE71D9 /* infoCountriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562F155C2BEC8A3C00DE71D9 /* infoCountriesViewModel.swift */; };
 		562F15622BED563100DE71D9 /* FlagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562F15612BED563100DE71D9 /* FlagView.swift */; };
 		562F15642BED5F4E00DE71D9 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562F15632BED5F4E00DE71D9 /* WebView.swift */; };
+		562F15672BED69C000DE71D9 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562F15662BED69C000DE71D9 /* CoreDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +62,7 @@
 		562F155C2BEC8A3C00DE71D9 /* infoCountriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = infoCountriesViewModel.swift; sourceTree = "<group>"; };
 		562F15612BED563100DE71D9 /* FlagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagView.swift; sourceTree = "<group>"; };
 		562F15632BED5F4E00DE71D9 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		562F15662BED69C000DE71D9 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 		562F152B2BEC3E8300DE71D9 /* Resourses */ = {
 			isa = PBXGroup;
 			children = (
+				562F15652BED69AC00DE71D9 /* Managers */,
 				562F15462BEC588500DE71D9 /* Components */,
 				562F15392BEC520000DE71D9 /* Localizables */,
 				562F15362BEC510E00DE71D9 /* Extensions */,
@@ -226,6 +229,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		562F15652BED69AC00DE71D9 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				562F15662BED69C000DE71D9 /* CoreDataManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -308,6 +319,7 @@
 				562F15622BED563100DE71D9 /* FlagView.swift in Sources */,
 				562F15402BEC55FB00DE71D9 /* HomeModel.swift in Sources */,
 				562F154F2BEC601F00DE71D9 /* URLsHelper.swift in Sources */,
+				562F15672BED69C000DE71D9 /* CoreDataManager.swift in Sources */,
 				562F15492BEC58CC00DE71D9 /* CountriesTableViewCell.swift in Sources */,
 				562F15562BEC7B9F00DE71D9 /* SearchCountriesModel.swift in Sources */,
 				562F15422BEC561B00DE71D9 /* HomeViewModel.swift in Sources */,
