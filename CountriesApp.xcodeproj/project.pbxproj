@@ -86,7 +86,6 @@
 			isa = PBXGroup;
 			children = (
 				562F153E2BEC52E400DE71D9 /* Home */,
-				562F15152BEC3E3300DE71D9 /* HomeView.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -129,6 +128,7 @@
 		562F153E2BEC52E400DE71D9 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				562F15152BEC3E3300DE71D9 /* HomeView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
