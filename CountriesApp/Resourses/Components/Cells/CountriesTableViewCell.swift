@@ -21,34 +21,34 @@ class CountriesTableViewCell: UITableViewCell {
         return stack
     }()
     
-    lazy var nameLabel: UILabel = {
+    lazy var nameCommonLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.font = .boldSystemFont(ofSize: 20)
         label.textColor = .black
-        label.text = "Nombre"
+        label.text = ""
         return label
     }()
     
     
-    lazy var episodeLabel: UILabel = {
+    lazy var nameOfficialLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         label.font = .systemFont(ofSize: 18)
         label.textColor = .systemGray
-        label.text = "Dato 1"
+        label.text = ""
         return label
     }()
     
-    lazy var airDateLabel: UILabel = {
+    lazy var capitalLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         label.font = .systemFont(ofSize: 18)
         label.textColor = .systemGray
-        label.text = "Dato 2"
+        label.text = ""
         return label
     }()
     
@@ -65,9 +65,9 @@ class CountriesTableViewCell: UITableViewCell {
     
     fileprivate func setupUIElements() {
         contentView.addSubview(dataStack)
-        dataStack.addArrangedSubview(nameLabel)
-        dataStack.addArrangedSubview(episodeLabel)
-        dataStack.addArrangedSubview(airDateLabel)
+        dataStack.addArrangedSubview(nameCommonLabel)
+        dataStack.addArrangedSubview(nameOfficialLabel)
+        dataStack.addArrangedSubview(capitalLabel)
     }
     
     fileprivate func setupConstraints() {
@@ -80,8 +80,8 @@ class CountriesTableViewCell: UITableViewCell {
     }
     
     func setCell(countries: CountriesModel) {
-        nameLabel.text = countries.nameCommon
-        episodeLabel.text = countries.nameOfficial
-        airDateLabel.text = countries.capital?.first
+        nameCommonLabel.text = countries.nameCommon
+        nameOfficialLabel.text = countries.nameOfficial
+        capitalLabel.text = countries.capital?.first
     }
 }

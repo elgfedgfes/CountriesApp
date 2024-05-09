@@ -8,24 +8,30 @@
 import Foundation
 
 enum APIBasePath: String {
-    case base = "https://restcountries.com/v3.1/"
+    case base = "https://restcountries.com/v3.1"
 }
 
 enum Endpoint: String {
-    case allCountries = "all"
+    case allCountries = "/all"
+    case nameCountries = "/name"
 }
 
 class URLsHelper {
-    static let AllCountries = (APIBasePath.base.rawValue + Endpoint.allCountries.rawValue)
+    static let allCountries = (APIBasePath.base.rawValue + Endpoint.allCountries.rawValue)
+    static let namedCountries = (APIBasePath.base.rawValue + Endpoint.nameCountries.rawValue)
     
     func appendNameQueryParameter(url: String, name: String) -> String {
-        guard var urlComponents = URLComponents(string: url + "/") else {
-            return url
-        }
-        urlComponents.queryItems = [URLQueryItem(name: "name", value: name)]
-        guard let nonNilURL = urlComponents.url else {
-            return url
-        }
-        return nonNilURL.absoluteString
+        // MARK: - FULL NAME SEARCH
+//        guard var urlComponents = URLComponents(string: url + "/\(name)") else {
+//            return url
+//        }
+//        urlComponents.queryItems = [URLQueryItem(name: "fullText", value: "true")]
+//        guard let nonNilURL = urlComponents.url else {
+//            return url
+//        }
+//        return nonNilURL.absoluteString
+        
+        // MARK: - NAME SEARCH
+        return url + "/" + name
     }
 }
