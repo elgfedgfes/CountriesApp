@@ -34,7 +34,7 @@ class CoreDataManager {
     }
     
     
-    func RecentSearchGET(name: String, completion: @escaping (Result<[String], Error>) -> Void) {
+    func RecentSearchGET(completion: @escaping (Result<[String], Error>) -> Void) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return completion(.failure(CoreDataError.ErrorUIApplicationDelegate)) }
         let context = appDelegate.persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "RecentSearchEntity")

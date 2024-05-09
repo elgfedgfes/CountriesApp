@@ -32,6 +32,7 @@
 		562F15622BED563100DE71D9 /* FlagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562F15612BED563100DE71D9 /* FlagView.swift */; };
 		562F15642BED5F4E00DE71D9 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562F15632BED5F4E00DE71D9 /* WebView.swift */; };
 		562F15672BED69C000DE71D9 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562F15662BED69C000DE71D9 /* CoreDataManager.swift */; };
+		562F15692BED6ECC00DE71D9 /* RecentSearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562F15682BED6ECC00DE71D9 /* RecentSearchCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +64,7 @@
 		562F15612BED563100DE71D9 /* FlagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagView.swift; sourceTree = "<group>"; };
 		562F15632BED5F4E00DE71D9 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		562F15662BED69C000DE71D9 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		562F15682BED6ECC00DE71D9 /* RecentSearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				562F15482BEC58CC00DE71D9 /* CountriesTableViewCell.swift */,
+				562F15682BED6ECC00DE71D9 /* RecentSearchCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				562F15672BED69C000DE71D9 /* CoreDataManager.swift in Sources */,
 				562F15492BEC58CC00DE71D9 /* CountriesTableViewCell.swift in Sources */,
 				562F15562BEC7B9F00DE71D9 /* SearchCountriesModel.swift in Sources */,
+				562F15692BED6ECC00DE71D9 /* RecentSearchCollectionViewCell.swift in Sources */,
 				562F15422BEC561B00DE71D9 /* HomeViewModel.swift in Sources */,
 				562F15522BEC7A6000DE71D9 /* SearchCountriesView.swift in Sources */,
 				562F15162BEC3E3300DE71D9 /* HomeView.swift in Sources */,

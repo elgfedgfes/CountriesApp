@@ -9,7 +9,9 @@ import UIKit
 
 class SearchCountriesView: UIViewController {
     private let viewModel = SearchCountriesViewModel()
+    private let dataManager = CoreDataManager()
     private var previousSearchText: String = ""
+    private var resentSearchResult: [String]?
     
     lazy var searchBar: UISearchController = {
         let searchController = UISearchController()
@@ -18,6 +20,30 @@ class SearchCountriesView: UIViewController {
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.placeholder = "Search"
         return searchController
+    }()
+    
+    lazy var resentSearchLabel: UILabel = {
+       let label = UILabel()
+        label.text = "Recent search"
+        label.textAlignment = .left
+        label.font = .boldSystemFont(ofSize: 20)
+        label.textColor = .lightGray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
+        return label
+    }()
+    
+    lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.estimatedItemSize = CGSizeMake(1,1)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(RecentSearchCollectionViewCell.self, forCellWithReuseIdentifier: RecentSearchCollectionViewCell.identifier)
+        collectionView.isHidden = true
+        return collectionView
     }()
     
     lazy var tableView: UITableView = {
@@ -49,9 +75,29 @@ class SearchCountriesView: UIViewController {
         self.navigationItem.hidesSearchBarWhenScrolling = false
         previousSearchText = searchBar.searchBar.text ?? ""
         viewModel.delegate = self
-        setupUIElements()
-        setupConstraints()
         bind()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        dataManager.RecentSearchGET { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let responseData):
+                    self?.resentSearchResult = responseData
+                    self?.collectionView.reloadData()
+                    if self?.resentSearchResult?.count != 0 {
+                        self?.collectionView.isHidden = false
+                        self?.resentSearchLabel.isHidden = false
+                    }
+                    self?.setupUIElements()
+                    self?.setupConstraints()
+                case .failure(let error):
+                    print("error: \(error)")
+                }
+            }
+        }
+        
     }
     
     private func bind() {
@@ -67,20 +113,42 @@ class SearchCountriesView: UIViewController {
     }
     
     fileprivate func setupUIElements() {
+        view.addSubview(resentSearchLabel)
+        view.addSubview(collectionView)
         view.addSubview(tableView)
         view.addSubview(notFoundLabel)
     }
     
     fileprivate func setupConstraints() {
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            resentSearchLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            resentSearchLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            resentSearchLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            
+            collectionView.topAnchor.constraint(equalTo: resentSearchLabel.bottomAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            collectionView.heightAnchor.constraint(equalToConstant: 50),
             
             notFoundLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             notFoundLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
+        if collectionView.isHidden {
+            NSLayoutConstraint.activate([
+                tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            ])
+
+        } else {
+            NSLayoutConstraint.activate([
+                tableView.topAnchor.constraint(equalTo: collectionView.bottomAnchor),
+                tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            ])
+        }
     }
 }
 
@@ -101,9 +169,33 @@ extension SearchCountriesView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let infoCountriesVC = InfoCountriesView()
         infoCountriesVC.registerDataToShow = viewModel.countries[indexPath.row]
+        dataManager.RecentSearchPOST(name: viewModel.countries[indexPath.row].nameCommon ?? "") { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(_):
+                    print("succes: name saved")
+                case .failure(let error):
+                    print("error: \(error)")
+                }
+            }
+        }
         self.navigationController?.pushViewController(infoCountriesVC, animated: true)
     }
     
+}
+
+extension SearchCountriesView: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        resentSearchResult?.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecentSearchCollectionViewCell.identifier, for: indexPath) as? RecentSearchCollectionViewCell {
+            cell.nameLabel.text = resentSearchResult?[indexPath.row]
+            return cell
+        }
+        return UICollectionViewCell()
+    }
 }
 
 extension SearchCountriesView: UISearchResultsUpdating {
