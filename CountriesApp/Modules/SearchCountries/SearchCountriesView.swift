@@ -30,7 +30,7 @@ class SearchCountriesView: UIViewController {
     
     lazy var notFoundLabel: UILabel = {
        let label = UILabel()
-        label.text = "No se enontraron resultados"
+        label.text = "No se encontraron resultados"
         label.textAlignment = .center
         label.font = .boldSystemFont(ofSize: 20)
         label.textColor = .lightGray
