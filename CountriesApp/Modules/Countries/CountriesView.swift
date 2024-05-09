@@ -87,7 +87,7 @@ extension CountriesView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let infoCountriesVC = infoCountriesView()
+        let infoCountriesVC = InfoCountriesView()
         infoCountriesVC.registerDataToShow = viewModel.countries[indexPath.row]
         self.navigationController?.pushViewController(infoCountriesVC, animated: true)
     }

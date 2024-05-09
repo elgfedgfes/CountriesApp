@@ -1,5 +1,5 @@
 //
-//  infoCountriesView.swift
+//  InfoCountriesView.swift
 //  CountriesApp
 //
 //  Created by Luis Fernando Sánchez Palma on 08/05/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class infoCountriesView: UIViewController {
+class InfoCountriesView: UIViewController {
     var registerDataToShow: CountriesModel?
     
     lazy var infoStackContainer : UIStackView = {
