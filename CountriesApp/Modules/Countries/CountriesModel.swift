@@ -13,6 +13,7 @@ struct CountriesModel {
     let capital: [String]?
     let Currencies: Currencies?
     let flagURL: String?
+    let mapURL: String?
 }
 
 struct CountriesModelResponse: Codable {

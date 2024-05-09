@@ -159,6 +159,10 @@ class infoCountriesView: UIViewController {
     }
     
     @objc func goToShowMap(_ sender: UIButton) {
+        let showWebVC = WebView()
+        showWebVC.mapURLToShow = registerDataToShow?.mapURL
+        showWebVC.modalPresentationStyle = .fullScreen
+        self.navigationController?.present(showWebVC, animated: true)
     }
     
     func obtainCurrencies(currencies: Currencies?) {

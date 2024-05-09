@@ -34,7 +34,7 @@ class SearchCountriesViewModel {
     private func makeCountriesRequest(urlRequest: String) {
         networkManager.request(url: urlRequest, method: .get, responseType: [CountriesModelResponse].self) { [weak self] modelResponse in
             let responseCountries = modelResponse.map {
-                CountriesModel(nameCommon: $0.name?.common, nameOfficial: $0.name?.official, capital: $0.capital, Currencies: $0.currencies, flagURL: $0.flags?.png)
+                CountriesModel(nameCommon: $0.name?.common, nameOfficial: $0.name?.official, capital: $0.capital, Currencies: $0.currencies, flagURL: $0.flags?.png, mapURL: $0.maps?.googleMaps)
             }
             self?.countries = responseCountries
         } failure: { [weak self] errorResponse in

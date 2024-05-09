@@ -30,6 +30,7 @@
 		562F155B2BEC8A3200DE71D9 /* infoCountriesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562F155A2BEC8A3200DE71D9 /* infoCountriesModel.swift */; };
 		562F155D2BEC8A3C00DE71D9 /* infoCountriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562F155C2BEC8A3C00DE71D9 /* infoCountriesViewModel.swift */; };
 		562F15622BED563100DE71D9 /* FlagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562F15612BED563100DE71D9 /* FlagView.swift */; };
+		562F15642BED5F4E00DE71D9 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562F15632BED5F4E00DE71D9 /* WebView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +60,7 @@
 		562F155A2BEC8A3200DE71D9 /* infoCountriesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = infoCountriesModel.swift; sourceTree = "<group>"; };
 		562F155C2BEC8A3C00DE71D9 /* infoCountriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = infoCountriesViewModel.swift; sourceTree = "<group>"; };
 		562F15612BED563100DE71D9 /* FlagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagView.swift; sourceTree = "<group>"; };
+		562F15632BED5F4E00DE71D9 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,10 +115,10 @@
 		562F152A2BEC3E7800DE71D9 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				562F15572BEC89CE00DE71D9 /* infoCountries */,
 				562F153E2BEC52E400DE71D9 /* Home */,
 				562F15432BEC563200DE71D9 /* Countries */,
 				562F15502BEC79EA00DE71D9 /* SearchCountries */,
+				562F15572BEC89CE00DE71D9 /* infoCountries */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -219,6 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				562F15612BED563100DE71D9 /* FlagView.swift */,
+				562F15632BED5F4E00DE71D9 /* WebView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -301,6 +304,7 @@
 				562F15332BEC50D400DE71D9 /* NetworkManager.swift in Sources */,
 				562F154D2BEC5A2D00DE71D9 /* CountriesViewModel.swift in Sources */,
 				562F15452BEC567300DE71D9 /* CountriesView.swift in Sources */,
+				562F15642BED5F4E00DE71D9 /* WebView.swift in Sources */,
 				562F15622BED563100DE71D9 /* FlagView.swift in Sources */,
 				562F15402BEC55FB00DE71D9 /* HomeModel.swift in Sources */,
 				562F154F2BEC601F00DE71D9 /* URLsHelper.swift in Sources */,
