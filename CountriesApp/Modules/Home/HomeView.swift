@@ -69,7 +69,8 @@ class HomeView: UIViewController {
     }
     
     @objc func goToCountriesView(_ sender: UIButton) {
-
+        let charactersVC = CountriesView()
+        self.navigationController?.pushViewController(charactersVC, animated: true)
     }
     
     @objc func goToSearchCountriesView(_ sender: UIButton) {
