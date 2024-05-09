@@ -13,6 +13,7 @@ class CountriesView: UIViewController {
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.register(CountriesTableViewCell.self, forCellReuseIdentifier: CountriesTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -83,6 +84,12 @@ extension CountriesView: UITableViewDelegate, UITableViewDataSource {
             return cell
         }
         return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let infoCountriesVC = infoCountriesView()
+        infoCountriesVC.registerDataToShow = viewModel.countries[indexPath.row]
+        self.navigationController?.pushViewController(infoCountriesVC, animated: true)
     }
     
 }

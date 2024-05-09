@@ -23,6 +23,7 @@ class SearchCountriesView: UIViewController {
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.register(CountriesTableViewCell.self, forCellReuseIdentifier: CountriesTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -88,7 +89,6 @@ extension SearchCountriesView: UITableViewDelegate, UITableViewDataSource {
         return viewModel.countries.count
     }
     
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: CountriesTableViewCell.identifier, for: indexPath) as? CountriesTableViewCell {
             cell.backgroundColor = indexPath.row % 2 == 0 ? .systemBackground : .secondarySystemBackground
@@ -96,6 +96,12 @@ extension SearchCountriesView: UITableViewDelegate, UITableViewDataSource {
             return cell
         }
         return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let infoCountriesVC = infoCountriesView()
+        infoCountriesVC.registerDataToShow = viewModel.countries[indexPath.row]
+        self.navigationController?.pushViewController(infoCountriesVC, animated: true)
     }
     
 }
