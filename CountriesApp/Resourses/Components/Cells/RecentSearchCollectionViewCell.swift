@@ -15,6 +15,7 @@ class RecentSearchCollectionViewCell: UICollectionViewCell {
         label.textColor = .label
         label.text = "Nombre"
         label.numberOfLines = 0
+        label.preferredMaxLayoutWidth = 500
         label.font = .systemFont(ofSize: 18, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
