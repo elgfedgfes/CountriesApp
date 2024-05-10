@@ -9,9 +9,7 @@ import UIKit
 
 class SearchCountriesView: UIViewController {
     private let viewModel = SearchCountriesViewModel()
-    private let dataManager = CoreDataManager()
     private var previousSearchText: String = ""
-    private var resentSearchResult: [String]?
     
     lazy var searchBar: UISearchController = {
         let searchController = UISearchController()
@@ -37,6 +35,8 @@ class SearchCountriesView: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.estimatedItemSize = CGSizeMake(1,1)
+        layout.minimumInteritemSpacing = 1.0
+        layout.minimumLineSpacing = 1.0
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
@@ -57,7 +57,7 @@ class SearchCountriesView: UIViewController {
     
     lazy var notFoundLabel: UILabel = {
        let label = UILabel()
-        label.text = "No se encontraron resultados"
+        label.text = "No results found"
         label.textAlignment = .center
         label.font = .boldSystemFont(ofSize: 20)
         label.textColor = .lightGray
@@ -80,33 +80,28 @@ class SearchCountriesView: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        dataManager.RecentSearchGET { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let responseData):
-                    self?.resentSearchResult = responseData
-                    self?.collectionView.reloadData()
-                    if self?.resentSearchResult?.count != 0 {
-                        self?.collectionView.isHidden = false
-                        self?.resentSearchLabel.isHidden = false
-                    }
-                    self?.setupUIElements()
-                    self?.setupConstraints()
-                case .failure(let error):
-                    print("error: \(error)")
-                }
-            }
-        }
-        
+        bind()
+        setupUIElements()
+        setupConstraints()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.fetchResentSearch()
     }
     
     private func bind() {
         viewModel.refreshData = { [weak self] in
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
-                if ((self?.tableView.isHidden) != nil) {
+                self?.collectionView.reloadData()
+                if self?.viewModel.countries.count != 0 {
                     self?.tableView.isHidden = false
                     self?.notFoundLabel.isHidden = true
+                }
+                if self?.viewModel.resentSearchResult.count != 0 {
+                    self?.collectionView.isHidden = false
+                    self?.resentSearchLabel.isHidden = false
                 }
             }
         }
@@ -133,7 +128,7 @@ class SearchCountriesView: UIViewController {
             notFoundLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             notFoundLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
-        if collectionView.isHidden {
+        if viewModel.resentSearchResult.count == 0 {
             NSLayoutConstraint.activate([
                 tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
                 tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -169,32 +164,27 @@ extension SearchCountriesView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let infoCountriesVC = InfoCountriesView()
         infoCountriesVC.registerDataToShow = viewModel.countries[indexPath.row]
-        dataManager.RecentSearchPOST(name: viewModel.countries[indexPath.row].nameCommon ?? "") { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(_):
-                    print("succes: name saved")
-                case .failure(let error):
-                    print("error: \(error)")
-                }
-            }
-        }
+        viewModel.saveResentSearch(name: viewModel.countries[indexPath.row].nameCommon ?? "")
         self.navigationController?.pushViewController(infoCountriesVC, animated: true)
     }
     
 }
 
-extension SearchCountriesView: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension SearchCountriesView: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        resentSearchResult?.count ?? 0
+        viewModel.resentSearchResult.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecentSearchCollectionViewCell.identifier, for: indexPath) as? RecentSearchCollectionViewCell {
-            cell.nameLabel.text = resentSearchResult?[indexPath.row]
+            cell.nameLabel.text = viewModel.resentSearchResult[indexPath.row]
             return cell
         }
         return UICollectionViewCell()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.getFilterCountries(searchText: viewModel.resentSearchResult[indexPath.row])
     }
 }
 

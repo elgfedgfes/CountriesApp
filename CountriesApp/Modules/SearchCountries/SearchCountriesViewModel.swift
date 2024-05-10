@@ -13,9 +13,15 @@ protocol SearchCountriesViewModelDelegate: AnyObject {
 
 class SearchCountriesViewModel {
     var networkManager = NetworkManager()
+    private let dataManager = CoreDataManager()
     weak var delegate: SearchCountriesViewModelDelegate?
     var refreshData = { () -> () in}
     var countries: [CountriesModel] = [] {
+        didSet {
+            refreshData()
+        }
+    }
+    var resentSearchResult: [String] = [] {
         didSet {
             refreshData()
         }
@@ -42,6 +48,34 @@ class SearchCountriesViewModel {
                 self?.delegate?.notifyNotFoundCountries()
             } else {
                 print("Error \(errorResponse)")
+            }
+        }
+    }
+    
+    func saveResentSearch(name: String) {
+        if !resentSearchResult.contains(name) {
+            dataManager.RecentSearchPOST(name: name) { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(_):
+                        print("succes: name saved")
+                    case .failure(let error):
+                        print("error: \(error)")
+                    }
+                }
+            }
+        }
+    }
+    
+    func fetchResentSearch() {
+        dataManager.RecentSearchGET { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let responseData):
+                    self?.resentSearchResult = responseData
+                case .failure(let error):
+                    print("error: \(error)")
+                }
             }
         }
     }
